@@ -22,9 +22,8 @@
     <dependencies>
         <dependency>
             <groupId>com.arjuna.dbplugins</groupId>
-            <artifactId>simple-plugin</artifactId>
+            <artifactId>webservice-plugin</artifactId>
             <version>1.0.0p1m1</version>
-            <scope>provided</scope>
             <type>ejb</type>
         </dependency>
     </dependencies>
@@ -39,7 +38,7 @@
                     <modules>
                         <ejbModule>
                             <groupId>com.arjuna.dbplugins</groupId>
-                            <artifactId>simple-plugin</artifactId>
+                            <artifactId>webservice-plugin</artifactId>
                         </ejbModule>
                     </modules>
                 </configuration>

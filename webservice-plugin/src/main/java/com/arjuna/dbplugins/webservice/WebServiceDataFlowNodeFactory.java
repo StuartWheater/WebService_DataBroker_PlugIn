@@ -53,25 +53,55 @@ public class WebServiceDataFlowNodeFactory implements DataFlowNodeFactory
     public <T extends DataFlowNode> List<String> getMetaPropertyNames(Class<T> dataFlowNodeClass)
         throws InvalidClassException
     {
-        return Collections.emptyList();
+        if (dataFlowNodeClass.isAssignableFrom(WebServiceDataSource.class))
+            return Collections.emptyList();
+        else
+            throw new InvalidClassException("Unsupported class", dataFlowNodeClass.getName());
     }
 
     @Override
     public <T extends DataFlowNode> List<String> getPropertyNames(Class<T> dataFlowNodeClass, Map<String, String> metaProperties)
         throws InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException
     {
-        return Collections.emptyList();
+        if (dataFlowNodeClass.isAssignableFrom(WebServiceDataSource.class))
+        {
+            if (metaProperties.isEmpty())
+            {
+                List<String> propertyNames = new LinkedList<String>();
+
+                propertyNames.add(WebServiceDataSource.WSDLURL_PROPERTYNAME);
+                propertyNames.add(WebServiceDataSource.SERVICENAMESPACE_PROPERTYNAME);
+                propertyNames.add(WebServiceDataSource.SERVICENAME_PROPERTYNAME);
+                propertyNames.add(WebServiceDataSource.SCHEDULEEXPRESSION_PROPERTYNAME);
+
+                return propertyNames;
+            }
+            else
+                throw new InvalidMetaPropertyException("No metaproperties expected", null, null);
+        }
+        else
+            throw new InvalidClassException("Unsupported class", dataFlowNodeClass.getName());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends DataFlowNode> T createDataFlowNode(String name, Class<T> dataFlowNodeClass, Map<String, String> metaProperties, Map<String, String> properties)
-        throws InvalidNameException, InvalidPropertyException, MissingPropertyException
+        throws InvalidClassException, InvalidNameException, InvalidMetaPropertyException, MissingMetaPropertyException, InvalidPropertyException, MissingPropertyException
     {
         if (dataFlowNodeClass.isAssignableFrom(WebServiceDataSource.class))
-            return (T) new WebServiceDataSource(name, properties);
+        {
+            if (metaProperties.isEmpty())
+            {
+                if (metaProperties.isEmpty())
+                    return (T) new WebServiceDataSource(name, properties);
+                else
+                    throw new InvalidPropertyException("No properties expected", null, null);
+            }
+            else
+                throw new InvalidMetaPropertyException("No metaproperties expected", null, null);
+        }
         else
-            return null;
+            throw new InvalidClassException("Unsupported class", dataFlowNodeClass.getName());
     }
 
     private String              _name;

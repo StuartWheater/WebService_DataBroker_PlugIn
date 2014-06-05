@@ -89,12 +89,14 @@ public class WebServiceDataSource implements DataSource
             Dispatch<SOAPMessage> dispatch = _service.createDispatch(_portName,SOAPMessage.class, Service.Mode.MESSAGE);
             dispatch.getRequestContext().put("javax.xml.ws.client.connectionTimeout", "30000");
             dispatch.getRequestContext().put("javax.xml.ws.client.receiveTimeout", "30000");
-            MessageFactory messageFactory  = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
-            SOAPMessage    request          = messageFactory.createMessage();
-            SOAPMessage    responce         = dispatch.invoke(request);
-            SOAPPart       responcePart     = responce.getSOAPPart();
-            SOAPEnvelope   responceEnvelope = responcePart.getEnvelope();
-            SOAPBody       responceBody     = responceEnvelope.getBody();
+            MessageFactory messageFactory = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
+            SOAPMessage    request        = messageFactory.createMessage();
+
+            SOAPMessage responce = dispatch.invoke(request);
+
+            SOAPPart     responcePart     = responce.getSOAPPart();
+            SOAPEnvelope responceEnvelope = responcePart.getEnvelope();
+            SOAPBody     responceBody     = responceEnvelope.getBody();
 
             NodeList childNodes = responceBody.getChildNodes();
             for (int index = 0; index < childNodes.getLength(); index++)

@@ -6,10 +6,10 @@
 
 <jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
     <ear-subdeployments-isolated>false</ear-subdeployments-isolated>
-    <sub-deployment name="simple-plugin-1.0.0p1m1.jar">
+    <sub-deployment name="webservice-plugin-1.0.0p1m1.jar">
         <dependencies>
-            <module name="deployment.server-ear-1.0.0p1m1.ear.data-common-1.0.0p1m1.jar"/>
-            <module name="deployment.server-ear-1.0.0p1m1.ear.control-core-1.0.0p1m1.jar"/>
+            <module name="deployment.webservice-ear-1.0.0p1m1.ear.data-common-1.0.0p1m1.jar"/>
+            <module name="deployment.webservice-ear-1.0.0p1m1.ear.control-core-1.0.0p1m1.jar"/>
         </dependencies>
     </sub-deployment>
 </jboss-deployment-structure>

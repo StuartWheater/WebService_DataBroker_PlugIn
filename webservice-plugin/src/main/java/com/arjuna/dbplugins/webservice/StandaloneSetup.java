@@ -25,11 +25,9 @@ public class StandaloneSetup
     {
         String              name       = "Test Web Service Data Source";
         Map<String, String> properties = new HashMap<String, String>();
-        properties.put(WebServiceDataSource.WSDLURL_PROPERTYNAME, "http://www.webservicex.net/LondonGoldFix.asmx?wsdl");
-        properties.put(WebServiceDataSource.SERVICENAMESPACE_PROPERTYNAME, "http://www.webservicex.net");
-        properties.put(WebServiceDataSource.SERVICENAME_PROPERTYNAME, "LondonGoldAndSilverFix");
-        properties.put(WebServiceDataSource.PORTNAMESPACE_PROPERTYNAME, "http://www.webservicex.net");
-        properties.put(WebServiceDataSource.PORTNAME_PROPERTYNAME, "LondonGoldAndSilverFixSoap12");
+        properties.put(WebServiceDataSource.SERVICEURL_PROPERTYNAME, "http://www.webservicex.net/LondonGoldFix.asmx");
+        properties.put(WebServiceDataSource.OPERATIONNAMESPACE_PROPERTYNAME, "http://www.webservicex.net");
+        properties.put(WebServiceDataSource.OPERATIONNAME_PROPERTYNAME, "GetLondonGoldAndSilverFix");
         properties.put(WebServiceDataSource.SCHEDULEEXPRESSION_PROPERTYNAME, "");
 
         try

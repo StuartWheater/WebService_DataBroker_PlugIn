@@ -69,9 +69,9 @@ public class WebServiceDataFlowNodeFactory implements DataFlowNodeFactory
             {
                 List<String> propertyNames = new LinkedList<String>();
 
-                propertyNames.add(WebServiceDataSource.WSDLURL_PROPERTYNAME);
-                propertyNames.add(WebServiceDataSource.SERVICENAMESPACE_PROPERTYNAME);
-                propertyNames.add(WebServiceDataSource.SERVICENAME_PROPERTYNAME);
+                propertyNames.add(WebServiceDataSource.SERVICEURL_PROPERTYNAME);
+                propertyNames.add(WebServiceDataSource.OPERATIONNAMESPACE_PROPERTYNAME);
+                propertyNames.add(WebServiceDataSource.OPERATIONNAME_PROPERTYNAME);
                 propertyNames.add(WebServiceDataSource.SCHEDULEEXPRESSION_PROPERTYNAME);
 
                 return propertyNames;

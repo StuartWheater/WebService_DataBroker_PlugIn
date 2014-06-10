@@ -23,22 +23,20 @@ public class StandaloneSetup
     @PostConstruct
     public void setup()
     {
+        logger.log(Level.INFO, "StandaloneSetup setup");
         String              name       = "Test Web Service Data Source";
         Map<String, String> properties = new HashMap<String, String>();
         properties.put(WebServiceDataSource.SERVICEURL_PROPERTYNAME, "http://www.webservicex.net/LondonGoldFix.asmx");
         properties.put(WebServiceDataSource.OPERATIONNAMESPACE_PROPERTYNAME, "http://www.webservicex.net");
         properties.put(WebServiceDataSource.OPERATIONNAME_PROPERTYNAME, "GetLondonGoldAndSilverFix");
-        properties.put(WebServiceDataSource.SCHEDULEEXPRESSION_PROPERTYNAME, "");
+        properties.put(WebServiceDataSource.SCHEDULEDELAY_PROPERTYNAME, "0");
+        properties.put(WebServiceDataSource.SCHEDULEPERIOD_PROPERTYNAME, "5000");
 
         try
         {
             WebServiceDataSource webServiceDataSource = new WebServiceDataSource(name, properties);
-
-            for (int count = 0; count < 1; count ++)
-            {
-                webServiceDataSource.invokeWebService();
-                Thread.sleep(2000);
-            }
+   
+            Thread.sleep(10000);
         }
         catch (Throwable throwable)
         {
@@ -49,5 +47,6 @@ public class StandaloneSetup
     @PreDestroy
     public void cleanup()
     {
+        logger.log(Level.INFO, "StandaloneSetup setup");
     }
 }

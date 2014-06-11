@@ -72,7 +72,8 @@ public class WebServiceDataFlowNodeFactory implements DataFlowNodeFactory
                 propertyNames.add(WebServiceDataSource.SERVICEURL_PROPERTYNAME);
                 propertyNames.add(WebServiceDataSource.OPERATIONNAMESPACE_PROPERTYNAME);
                 propertyNames.add(WebServiceDataSource.OPERATIONNAME_PROPERTYNAME);
-                propertyNames.add(WebServiceDataSource.SCHEDULEEXPRESSION_PROPERTYNAME);
+                propertyNames.add(WebServiceDataSource.SCHEDULEDELAY_PROPERTYNAME);
+                propertyNames.add(WebServiceDataSource.SCHEDULEPERIOD_PROPERTYNAME);
 
                 return propertyNames;
             }

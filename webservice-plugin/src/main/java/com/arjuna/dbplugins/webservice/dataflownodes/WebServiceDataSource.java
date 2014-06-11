@@ -119,6 +119,11 @@ public class WebServiceDataSource extends TimerTask implements DataSource
             _dataProvider.produce(result);
     }
 
+    public void stop()
+    {
+        cancel();
+    }
+
     @Override
     public Collection<Class<?>> getDataProviderDataClasses()
     {

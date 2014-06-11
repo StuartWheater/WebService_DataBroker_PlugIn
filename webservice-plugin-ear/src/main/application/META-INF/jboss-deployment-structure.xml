@@ -8,8 +8,8 @@
     <ear-subdeployments-isolated>false</ear-subdeployments-isolated>
     <sub-deployment name="webservice-plugin-1.0.0p1m1.jar">
         <dependencies>
-            <module name="deployment.webservice-plugin-ear-1.0.0p1m1.ear.data-common-1.0.0p1m1.jar"/>
-            <module name="deployment.webservice-plugin-ear-1.0.0p1m1.ear.control-core-1.0.0p1m1.jar"/>
+            <module name="deployment.server-1.0.0p1m1.ear.data-common-1.0.0p1m1.jar"/>
+            <module name="deployment.server-1.0.0p1m1.ear.control-core-1.0.0p1m1.jar"/>
         </dependencies>
     </sub-deployment>
 </jboss-deployment-structure>

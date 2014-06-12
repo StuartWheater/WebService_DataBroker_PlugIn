@@ -129,7 +129,7 @@ public class WebServiceDataSource extends TimerTask implements DataSource
     {
         Set<Class<?>> dataProviderDataClasses = new HashSet<Class<?>>();
 
-        dataProviderDataClasses.add(String.class);
+        dataProviderDataClasses.add(Document.class);
         
         return dataProviderDataClasses;
     }

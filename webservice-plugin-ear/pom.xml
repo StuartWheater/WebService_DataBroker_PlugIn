@@ -53,11 +53,11 @@
                             <artifactId>data-common</artifactId>
                             <includeInApplicationXml>true</includeInApplicationXml>
                         </jarModule>
-                         <ejbModule>
+                        <ejbModule>
                             <groupId>com.arjuna.databroker</groupId>
                             <artifactId>control-core</artifactId>
                         </ejbModule>
-                         <ejbModule>
+                        <ejbModule>
                             <groupId>com.arjuna.dbplugins</groupId>
                             <artifactId>webservice-plugin</artifactId>
                         </ejbModule>

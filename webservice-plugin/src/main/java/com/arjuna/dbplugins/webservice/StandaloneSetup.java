@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import com.arjuna.dbplugins.webservice.dataflownodes.WebServiceDataSource;
+import com.arjuna.dbplugins.webservice.dataflownodes.PullWebServiceDataSource;
 
 @Startup
 @Singleton
@@ -26,25 +26,25 @@ public class StandaloneSetup
         logger.log(Level.INFO, "StandaloneSetup setup");
         String              name       = "Test Web Service Data Source";
         Map<String, String> properties = new HashMap<String, String>();
-        properties.put(WebServiceDataSource.SERVICEURL_PROPERTYNAME, "http://172.18.32.157/svcVehicleData/service1.asmx");
-        properties.put(WebServiceDataSource.OPERATIONNAMESPACE_PROPERTYNAME, "http://tempuri.org/");
-        properties.put(WebServiceDataSource.OPERATIONNAME_PROPERTYNAME, "GetVehicleData");
-        properties.put(WebServiceDataSource.SCHEDULEDELAY_PROPERTYNAME, "10000");
-        properties.put(WebServiceDataSource.SCHEDULEPERIOD_PROPERTYNAME, "30000");
+        properties.put(PullWebServiceDataSource.SERVICEURL_PROPERTYNAME, "http://172.18.32.157/svcVehicleData/service1.asmx");
+        properties.put(PullWebServiceDataSource.OPERATIONNAMESPACE_PROPERTYNAME, "http://tempuri.org/");
+        properties.put(PullWebServiceDataSource.OPERATIONNAME_PROPERTYNAME, "GetVehicleData");
+        properties.put(PullWebServiceDataSource.SCHEDULEDELAY_PROPERTYNAME, "10000");
+        properties.put(PullWebServiceDataSource.SCHEDULEPERIOD_PROPERTYNAME, "30000");
 
         try
         {
-            _webServiceDataSource = new WebServiceDataSource(name, properties);
+            _pullWebServiceDataSource = new PullWebServiceDataSource(name, properties);
 
             Thread.sleep(60000);
 
-            _webServiceDataSource.stop();
+            _pullWebServiceDataSource.stop();
          }
         catch (Throwable throwable)
         {
             logger.log(Level.WARNING, "", throwable);
             
-            _webServiceDataSource.stop();
+            _pullWebServiceDataSource.stop();
         }
     }
 
@@ -53,8 +53,8 @@ public class StandaloneSetup
     {
         logger.log(Level.INFO, "StandaloneSetup setup");
 
-        _webServiceDataSource.stop();
+        _pullWebServiceDataSource.stop();
     }
     
-    private WebServiceDataSource _webServiceDataSource;
+    private PullWebServiceDataSource _pullWebServiceDataSource;
 }

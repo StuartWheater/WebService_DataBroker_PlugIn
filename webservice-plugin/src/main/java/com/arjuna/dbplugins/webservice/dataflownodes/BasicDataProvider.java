@@ -14,13 +14,13 @@ import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlowNode;
 import com.arjuna.databroker.data.DataProvider;
 
-public class TestingDataProvider<T> implements DataProvider<T>
+public class BasicDataProvider<T> implements DataProvider<T>
 {
-    private static final Logger logger = Logger.getLogger(TestingDataProvider.class.getName());
+    private static final Logger logger = Logger.getLogger(BasicDataProvider.class.getName());
 
-    public TestingDataProvider(DataFlowNode dataFlowNode)
+    public BasicDataProvider(DataFlowNode dataFlowNode)
     {
-        logger.log(Level.INFO, "TestingDataProvider: " + dataFlowNode);
+        logger.log(Level.INFO, "BasicDataProvider: " + dataFlowNode);
 
         _lastValue = null;
 
@@ -55,7 +55,7 @@ public class TestingDataProvider<T> implements DataProvider<T>
     @Override
     public void produce(T data)
     {
-        logger.log(Level.INFO, "TestingDataProvider.produce: [" + data.toString() + "]");
+        logger.log(Level.INFO, "BasicDataProvider.produce: [" + data.toString() + "]");
         _lastValue = data;
     }
 

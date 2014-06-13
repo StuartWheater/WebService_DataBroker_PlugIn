@@ -30,7 +30,8 @@
     </properties>
 
     <modules>
-        <module>webservice-plugin</module>
+        <module>webservice-plugin</module> 
+        <module>webservice-plugin-endpoint</module>
         <module>webservice-plugin-ear</module>
     </modules>
 

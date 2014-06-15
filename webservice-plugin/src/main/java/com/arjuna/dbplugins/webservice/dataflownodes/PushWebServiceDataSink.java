@@ -39,7 +39,7 @@ public class PushWebServiceDataSink implements DataSink
         _name       = name;
         _properties = properties;
 
-        _dataConsumer = new BasicDataConsumer<Document>(this, "consume");
+        _dataConsumer = new BasicDataConsumer<Document>(this, "consume", Document.class);
 
         _serviceURL         = properties.get(SERVICEURL_PROPERTYNAME);
         _operationNamespace = properties.get(OPERATIONNAMESPACE_PROPERTYNAME);

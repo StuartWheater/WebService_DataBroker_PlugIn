@@ -15,12 +15,13 @@ public class BasicDataConsumer<T> implements DataConsumer<T>
 {
     private static final Logger logger = Logger.getLogger(BasicDataConsumer.class.getName());
 
-    public BasicDataConsumer(DataFlowNode dataFlowNode, String methodName)
+    public BasicDataConsumer(DataFlowNode dataFlowNode, String methodName, Class<T> dataClass)
     {
-        logger.log(Level.FINE, "BasicDataConsumer: " + dataFlowNode + ", " + methodName);
-        
+        logger.log(Level.FINE, "BasicDataConsumer: " + dataFlowNode + ", " + methodName + ", " + dataClass);
+
         _dataFlowNode = dataFlowNode;
         _methodName   = methodName;
+        _dataClass    = dataClass;
     }
 
     @Override
@@ -43,11 +44,11 @@ public class BasicDataConsumer<T> implements DataConsumer<T>
         }
     }
 
-    private static Method getMethod(Class<?> nodeClass, String nodeMethodName)
+    private Method getMethod(Class<?> nodeClass, String nodeMethodName)
     {
         try
         {
-            return nodeClass.getMethod(nodeMethodName, new Class[]{String.class});
+            return nodeClass.getMethod(nodeMethodName, new Class[]{_dataClass});
         }
         catch (Throwable throwable)
         {
@@ -57,6 +58,7 @@ public class BasicDataConsumer<T> implements DataConsumer<T>
         }
     }
 
-    private DataFlowNode _dataFlowNode;
-    private String       _methodName;
+    private final DataFlowNode _dataFlowNode;
+    private final String       _methodName;
+    private final Class<T>     _dataClass;
 }

@@ -18,6 +18,8 @@ import com.arjuna.databroker.data.InvalidNameException;
 import com.arjuna.databroker.data.InvalidPropertyException;
 import com.arjuna.databroker.data.MissingMetaPropertyException;
 import com.arjuna.databroker.data.MissingPropertyException;
+import com.arjuna.dbplugins.webservice.dataflownodes.AcceptorWebServiceDataSource;
+import com.arjuna.dbplugins.webservice.dataflownodes.ProviderWebServiceDataSink;
 import com.arjuna.dbplugins.webservice.dataflownodes.PushWebServiceDataSink;
 import com.arjuna.dbplugins.webservice.dataflownodes.PullWebServiceDataSource;
 
@@ -57,7 +59,13 @@ public class WebServiceDataFlowNodeFactory implements DataFlowNodeFactory
         throws InvalidClassException
     {
         if (dataFlowNodeClass.equals(DataSource.class) || dataFlowNodeClass.equals(DataSink.class))
-            return Collections.emptyList();
+        {
+            List<String> metaPropertyNames = new LinkedList<String>();
+
+            metaPropertyNames.add("Type");
+
+            return metaPropertyNames;
+        }
         else
             throw new InvalidClassException("Unsupported class", dataFlowNodeClass.getName());
     }
@@ -66,37 +74,57 @@ public class WebServiceDataFlowNodeFactory implements DataFlowNodeFactory
     public <T extends DataFlowNode> List<String> getPropertyNames(Class<T> dataFlowNodeClass, Map<String, String> metaProperties)
         throws InvalidClassException, InvalidMetaPropertyException, MissingMetaPropertyException
     {
-        if (dataFlowNodeClass.isAssignableFrom(PullWebServiceDataSource.class))
+        if (dataFlowNodeClass.equals(DataSource.class))
         {
-            if (metaProperties.isEmpty())
+            if ((metaProperties.size() == 1) && metaProperties.containsKey("Type"))
             {
                 List<String> propertyNames = new LinkedList<String>();
 
-                propertyNames.add(PullWebServiceDataSource.SERVICEURL_PROPERTYNAME);
-                propertyNames.add(PullWebServiceDataSource.OPERATIONNAMESPACE_PROPERTYNAME);
-                propertyNames.add(PullWebServiceDataSource.OPERATIONNAME_PROPERTYNAME);
-                propertyNames.add(PullWebServiceDataSource.SCHEDULEDELAY_PROPERTYNAME);
-                propertyNames.add(PullWebServiceDataSource.SCHEDULEPERIOD_PROPERTYNAME);
+                String type = metaProperties.get("Type");
+                if (type.equals("Pull"))
+                {
+                    propertyNames.add(PullWebServiceDataSource.SERVICEURL_PROPERTYNAME);
+                    propertyNames.add(PullWebServiceDataSource.OPERATIONNAMESPACE_PROPERTYNAME);
+                    propertyNames.add(PullWebServiceDataSource.OPERATIONNAME_PROPERTYNAME);
+                    propertyNames.add(PullWebServiceDataSource.SCHEDULEDELAY_PROPERTYNAME);
+                    propertyNames.add(PullWebServiceDataSource.SCHEDULEPERIOD_PROPERTYNAME);
+                }
+                else if (type.equals("Acceptor"))
+                    propertyNames.clear();
+                else
+                    throw new InvalidMetaPropertyException("Expecting value of 'Type' meta property 'Pull' or 'Acceptor'", "Type", type);
 
                 return propertyNames;
             }
             else
-                throw new InvalidMetaPropertyException("No metaproperties expected", null, null);
+                throw new MissingMetaPropertyException("No metaproperties expected", "Type");
         }
-        else if (dataFlowNodeClass.isAssignableFrom(PushWebServiceDataSink.class))
+        else if ((metaProperties.size() == 1) && metaProperties.containsKey("Type"))
         {
             if (metaProperties.isEmpty())
             {
                 List<String> propertyNames = new LinkedList<String>();
 
-                propertyNames.add(PushWebServiceDataSink.SERVICEURL_PROPERTYNAME);
-                propertyNames.add(PushWebServiceDataSink.OPERATIONNAMESPACE_PROPERTYNAME);
-                propertyNames.add(PushWebServiceDataSink.OPERATIONNAME_PROPERTYNAME);
+                String type = metaProperties.get("Type");
+                if (type.equals("Push"))
+                {
+                    propertyNames.add(PushWebServiceDataSink.SERVICEURL_PROPERTYNAME);
+                    propertyNames.add(PushWebServiceDataSink.OPERATIONNAMESPACE_PROPERTYNAME);
+                    propertyNames.add(PushWebServiceDataSink.OPERATIONNAME_PROPERTYNAME);
+                }
+                else if (type.equals("Provider"))
+                {
+                    propertyNames.add(ProviderWebServiceDataSink.SERVICEURL_PROPERTYNAME);
+                    propertyNames.add(ProviderWebServiceDataSink.OPERATIONNAMESPACE_PROPERTYNAME);
+                    propertyNames.add(ProviderWebServiceDataSink.OPERATIONNAME_PROPERTYNAME);
+                }
+                else
+                    throw new InvalidMetaPropertyException("Expecting value of 'Type' meta property 'Push' or 'Provider'", "Type", type);
 
                 return propertyNames;
             }
             else
-                throw new InvalidMetaPropertyException("No metaproperties expected", null, null);
+                throw new MissingMetaPropertyException("No metaproperties expected", "Type");
         }
         else
             throw new InvalidClassException("Unsupported class", dataFlowNodeClass.getName());
@@ -109,24 +137,30 @@ public class WebServiceDataFlowNodeFactory implements DataFlowNodeFactory
     {
         if (dataFlowNodeClass.equals(DataSource.class))
         {
-            if (metaProperties.isEmpty())
+            if ((metaProperties.size() == 1) && metaProperties.containsKey("Type"))
             {
-                if (metaProperties.isEmpty())
+                String type = metaProperties.get("Type");
+                if (type.equals("Pull"))
                     return (T) new PullWebServiceDataSource(name, properties);
+                else if (type.equals("Acceptor"))
+                    return (T) new AcceptorWebServiceDataSource(name, properties);
                 else
-                    throw new InvalidPropertyException("No properties expected", null, null);
+                    throw new InvalidMetaPropertyException("Expecting value of 'Type' meta property 'Pull' or 'Acceptor'", "Type", type);
             }
             else
                 throw new InvalidMetaPropertyException("No metaproperties expected", null, null);
         }
         else if (dataFlowNodeClass.equals(DataSink.class))
         {
-            if (metaProperties.isEmpty())
+            if ((metaProperties.size() == 1) && metaProperties.containsKey("Type"))
             {
-                if (metaProperties.isEmpty())
+                String type = metaProperties.get("Type");
+                if (type.equals("Push"))
                     return (T) new PushWebServiceDataSink(name, properties);
+                else if (type.equals("Provider"))
+                    return (T) new ProviderWebServiceDataSink(name, properties);
                 else
-                    throw new InvalidPropertyException("No properties expected", null, null);
+                    throw new InvalidMetaPropertyException("Expecting value of 'Type' meta property 'Push' or 'Provider'", "Type", type);
             }
             else
                 throw new InvalidMetaPropertyException("No metaproperties expected", null, null);

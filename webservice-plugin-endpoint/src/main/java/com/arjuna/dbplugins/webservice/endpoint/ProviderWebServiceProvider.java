@@ -24,7 +24,6 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.WebServiceProvider;
 import javax.xml.ws.handler.MessageContext;
 import org.w3c.dom.Document;
-import com.arjuna.dbplugins.webservice.dataflownodes.AcceptorWebServiceDispatcher;
 import com.arjuna.dbplugins.webservice.dataflownodes.ProviderWebServiceJunction;
 
 @ServiceMode(value = Service.Mode.MESSAGE)

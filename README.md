@@ -2,9 +2,7 @@ WebService DataBroker PlugIn
 ============================
 
 DataBroker plugIn which support Web Service integration:
-* Acceptor Web Service Data Source
 * Pull Web Service Data Source
-* Provider Web Service Data Sink
 * Push Web Service Data Sink
 
 License

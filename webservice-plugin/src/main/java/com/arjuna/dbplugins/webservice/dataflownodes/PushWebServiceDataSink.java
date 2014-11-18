@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPConnection;
@@ -20,9 +21,13 @@ import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
+
 import org.w3c.dom.Document;
+
 import com.arjuna.databroker.data.DataConsumer;
+import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataSink;
+import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
 
 public class PushWebServiceDataSink implements DataSink
 {
@@ -39,8 +44,6 @@ public class PushWebServiceDataSink implements DataSink
         _name       = name;
         _properties = properties;
 
-        _dataConsumer = new BasicDataConsumer<Document>(this, "consume", Document.class);
-
         _serviceURL         = properties.get(SERVICEURL_PROPERTYNAME);
         _operationNamespace = properties.get(OPERATIONNAMESPACE_PROPERTYNAME);
         _operationName      = properties.get(OPERATIONNAME_PROPERTYNAME);
@@ -53,9 +56,33 @@ public class PushWebServiceDataSink implements DataSink
     }
 
     @Override
+    public void setName(String name)
+    {
+        _name = name;
+    }
+
+    @Override
     public Map<String, String> getProperties()
     {
         return Collections.unmodifiableMap(_properties);
+    }
+
+    @Override
+    public void setProperties(Map<String, String> properties)
+    {
+        _properties = properties;
+    }
+
+    @Override
+    public DataFlow getDataFlow()
+    {
+        return _dataFlow;
+    }
+
+    @Override
+    public void setDataFlow(DataFlow dataFlow)
+    {
+    	_dataFlow = dataFlow;
     }
 
     public void consume(Document data)
@@ -126,5 +153,7 @@ public class PushWebServiceDataSink implements DataSink
 
     private String                 _name;
     private Map<String, String>    _properties;
+    private DataFlow               _dataFlow;
+    @DataConsumerInjection(methodName="consume")
     private DataConsumer<Document> _dataConsumer;
 }
